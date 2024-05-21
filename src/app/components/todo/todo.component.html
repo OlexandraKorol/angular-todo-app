@@ -1,0 +1,27 @@
+<div 
+  class="todo" 
+  [class]="{completed: todo.complited}"
+  >
+  <label class="todo__status-label">
+    <input
+      type="checkbox"
+      class="todo__status"
+      [(ngModel)]="todo.complited"
+    />
+  </label>
+
+  <form *ngIf="editing; else titleBlock">
+    <input
+      type="text"
+      class="todo__title-field"
+      placeholder="Empty todo will be deleted"
+      defaultValue="JS"
+    />
+  </form>
+
+  <ng-template #titleBlock>
+    <span class="todo__title"> {{todo.title}} </span>
+
+    <!-- <button type="button" class="todo__remove" (click)="todos.splice(i, 1)">× </button> -->
+  </ng-template>
+</div>

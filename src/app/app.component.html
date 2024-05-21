@@ -9,50 +9,27 @@
         class="todoapp__toggle-all active"
       ></button>
 
-      <form>
+      <form (ngSubmit)="addTodo()" [formGroup]="todoForm">
         <input
-          data-cy="NewTodoField"
           type="text"
-          ref={newTodoField}
           class="todoapp__new-todo"
           placeholder="What needs to be done?"
+          formControlName="title"
+          [style.backgroundColor]="title.errors && title.touched? '#f88' :''"
         />
       </form>
     </header>
 
     <section class="todoapp__main" >
-      <div class="todo" [class]="{completed: todo.complited}" *ngFor="let todo of todos; let i = index">
-        <label class="todo__status-label">
-          <input
-            type="checkbox"
-            class="todo__status"
-            [(checked)]="todo.complited"
-          />
-        </label>
-
-        <form *ngIf="editing; else titleBlock">
-          <input
-            type="text"
-            class="todo__title-field"
-            placeholder="Empty todo will be deleted"
-            defaultValue="JS"
-          />
-        </form>
-
-        <ng-template #titleBlock>
-          <span class="todo__title"> {{todo.title}} </span>
-  
-          <button type="button" class="todo__remove" (click)="todos.splice(i, 1)">× </button>
-        </ng-template>
-      </div>
-     
-
-      
+      <app-todo 
+        *ngFor="let todo of todos; let i = index" 
+        [todo]="todo"
+      ></app-todo>
     </section>
 
-    <!-- <footer class="todoapp__footer" data-cy="Footer">
+   <footer class="todoapp__footer" data-cy="Footer">
       <span class="todo-count" data-cy="todosCounter">
-        4 items left
+        {{activeTodos.length}} items left
       </span>
 
       <nav class="filter" data-cy="Filter">
@@ -87,6 +64,6 @@
       >
         Clear completed
       </button>
-    </footer>  -->
+    </footer>
   </div>
 </div>
